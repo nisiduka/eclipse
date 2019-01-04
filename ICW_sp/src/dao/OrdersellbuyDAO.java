@@ -34,7 +34,7 @@ public class OrdersellbuyDAO {
 		String number = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			//注文テーブルの最新の注文numberを取る
@@ -112,7 +112,7 @@ public class OrdersellbuyDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -172,7 +172,7 @@ public class OrdersellbuyDAO {
 		OrdersellbuyDTO sellbuy = new OrdersellbuyDTO();
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -229,7 +229,7 @@ public class OrdersellbuyDAO {
 		String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"INSERT INTO ORDERS (ORDERNO,ACCTID, STOCKCDE, NUM_ORDER, ORDERPRICE, ORDER_TYPE, CONDITIONS, STATUS, SELL_BUY,BUYFEE) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
@@ -308,7 +308,7 @@ public class OrdersellbuyDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -365,7 +365,7 @@ public class OrdersellbuyDAO {
 	//	String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"DELETE FROM ORDERS WHERE orderno = ?");
 

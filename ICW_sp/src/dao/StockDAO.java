@@ -34,7 +34,7 @@ public class StockDAO {
 
 		try {
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("select T1.*,T2.MARKETNAME,T3.INDUSTRY_NAME,T4.PRICE,T4.FIRSTPRICE,T4.HIGHPRICE,T4.LOWPRICE,T4.VOLUME from STOCK T1 LEFT OUTER JOIN MARKET T2 ON T1.MARKETCDE = T2.MARKETCDE LEFT OUTER JOIN INDUSTRY T3 ON T1.INDUSTRY=T3.INDUSTRYCDE LEFT OUTER JOIN STOCK_STATUS T4 ON T1.STOCKCDE = T4.STOCKCDE where T1.MEIGARA_NAME_DBCS LIKE '%" + name + "%'");
@@ -93,7 +93,7 @@ public class StockDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("select T1.*,T2.MARKETNAME,T3.INDUSTRY_NAME,T4.PRICE,T4.FIRSTPRICE,T4.HIGHPRICE,T4.LOWPRICE,T4.VOLUME from STOCK T1 LEFT OUTER JOIN MARKET T2 ON T1.MARKETCDE = T2.MARKETCDE LEFT OUTER JOIN INDUSTRY T3 ON T1.INDUSTRY=T3.INDUSTRYCDE LEFT OUTER JOIN STOCK_STATUS T4 ON T1.STOCKCDE = T4.STOCKCDE where T1.STOCKCDE = '" + name+"'");
@@ -152,7 +152,7 @@ public class StockDAO {
 		StockDTO detail = new StockDTO();
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("select T1.*,T2.MARKETNAME,T3.INDUSTRY_NAME,T4.PRICE,T4.FIRSTPRICE,T4.HIGHPRICE,T4.LOWPRICE,T4.VOLUME from STOCK T1 LEFT OUTER JOIN MARKET T2 ON T1.MARKETCDE = T2.MARKETCDE LEFT OUTER JOIN INDUSTRY T3 ON T1.INDUSTRY=T3.INDUSTRYCDE LEFT OUTER JOIN STOCK_STATUS T4 ON T1.STOCKCDE = T4.STOCKCDE where T1.STOCKCDE = '" + code + "'");

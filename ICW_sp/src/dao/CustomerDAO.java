@@ -29,7 +29,7 @@ public class CustomerDAO {
 
 		try {
 			//JDBC
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT ACCTID  FROM CUSTOMER WHERE LOGINID = ? AND PASSWORD = ?");
 
 			stmt.setString(1, id);
@@ -75,7 +75,7 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT count(*) as count FROM CUSTOMER WHERE LOGINID = ? AND PASSWORD = ?");
 
 			stmt.setString(1, id);
@@ -125,7 +125,7 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT count(*) as count FROM CUSTOMER WHERE ACCTID = ? AND PASSWORD = ?");
 
 			stmt.setString(1, id);
@@ -169,7 +169,7 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			if(type.equals("カウントアップ")){
 				stmt = con.prepareStatement("UPDATE CUSTOMER SET PWCOUNT = PWCOUNT+1 WHERE ACCTID = ?");
 			}else if(type.equals("リセット")){
@@ -207,7 +207,7 @@ public class CustomerDAO {
 		int count = 0;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT PWCOUNT as count FROM CUSTOMER WHERE ACCTID = ?");
 
 			stmt.setString(1, id);
@@ -250,7 +250,7 @@ public class CustomerDAO {
 
 		try {
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt=con.prepareStatement("UPDATE CUSTOMER SET "
 					+ "loginid = ? , password = ? "
 					+ "where acctid = ?");

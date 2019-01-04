@@ -33,7 +33,7 @@ public class FavorDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -66,7 +66,7 @@ public class FavorDAO {
 		String favorite = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"INSERT INTO FAVOR (FAVORITE,ACCTID,STOCKCDE) VALUES (?,?,?) ");
 
@@ -115,7 +115,7 @@ public class FavorDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 //
 //			ResultSet rs = stmt.executeQuery(
@@ -167,7 +167,7 @@ public class FavorDAO {
 	//	String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"DELETE FROM favor WHERE favorite = ?");
 
@@ -212,7 +212,7 @@ public class FavorDAO {
 		OrdersellbuyDTO sellbuy = new OrdersellbuyDTO();
 
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
