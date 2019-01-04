@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.FavorDTO;
 import dto.OrdersellbuyDTO;
-import dto.*;
 
 
 public class FavorDAO {
@@ -26,20 +26,20 @@ public class FavorDAO {
 	/**
 	 * お気に入り済み判定
 	 */
-	
+
 	public static boolean Favornum(String stockcde,String acctId) {
 		//パラメーター初期化
 		Connection con = null;
 		Statement stmt = null;
-		
+
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
-					
+
 			ResultSet rs = stmt.executeQuery(
 					"select count(*) as count from favor "
 					+ "where acctId = '"+ acctId + "' and  stockcde = '" + stockcde + "'");
-			
+
 			rs.next();
 			String count = rs.getString("count");
 			if(count.equals("0")) {
@@ -52,21 +52,21 @@ public class FavorDAO {
 			return false;
 	}
 }
-	
-	
-	/** 
-	 * 
+
+
+	/**
+	 *
 	 * お気に入り銘柄書き込み
 	 */
 	//お気に入り銘柄の書き込み
-	
+
 	public static String createFavor(String stockcde,String acctId) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String favorite = "";
-				
+
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"INSERT INTO FAVOR (FAVORITE,ACCTID,STOCKCDE) VALUES (?,?,?) ");
 
@@ -75,12 +75,12 @@ public class FavorDAO {
 			stmt.setString(2,acctId);
 			System.out.println(acctId);
 			stmt.setString(3,stockcde);
-			
+
 			// クエリの実行
 			stmt.executeUpdate();
 			System.out.println(acctId);
 			return stockcde;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -105,7 +105,7 @@ public class FavorDAO {
 	}
 
 	/**
-	 * お気に入り 
+	 * お気に入り
 	 * 一覧
 	 */
 	public static List<FavorDTO> getFavorList(String accountId) {
@@ -115,24 +115,24 @@ public class FavorDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 //
 //			ResultSet rs = stmt.executeQuery(
 //					"select T1.*,T2.MEIGARA_NAME_DBCS,T3.PRICE,T4.MARKETNAME from ORDERS T1,STOCK T2,STOCK_STATUS T3,MARKET T4 where T1.STOCKCDE = T2.STOCKCDE AND T1.STOCKCDE = T3.STOCKCDE AND T2.MARKETCDE = T4.MARKETCDE AND T1.ACCTID = '"
 //							+ accountId + "' ORDER BY ORDERNO DESC");
 			ResultSet rs = stmt.executeQuery(
-					"select T1.favorite T2.* from favor T1,stock T2 where T1.stockcde=T2.stockcde and acctid= '" + accountId + "'"); 
-			
-			
+					"select T1.favorite T2.* from favor T1,stock T2 where T1.stockcde=T2.stockcde and acctid= '" + accountId + "'");
+
+
 			while (rs.next()) {
 				FavorDTO favor = new FavorDTO();
 				favor.setFavorite(rs.getString("favorite"));
 				favor.setStockCode(rs.getString("stockcde"));
 				favor.setAccountId(rs.getString("acctid"));
 				favor.setStockName(rs.getString("meigara_name_dbcs"));
-				
-				list.add(favor);				
+
+				list.add(favor);
 			}
 
 		} catch (SQLException e) {
@@ -158,16 +158,16 @@ public class FavorDAO {
 
 	/**
 	 * お気に入り登録
-	 * 
+	 *
 	 */
-	
+
 	public static boolean removeFavor(String favorite) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 	//	String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"DELETE FROM favor WHERE favorite = ?");
 
@@ -175,7 +175,7 @@ public class FavorDAO {
 
 			// クエリの実行
 			stmt.executeUpdate();
-			
+
 			return true;
 
 		} catch (SQLException e) {
@@ -201,7 +201,7 @@ public class FavorDAO {
 		return false;
 	}
 
-	
+
 	/**
 	 * 注文詳細
 	 */
@@ -212,22 +212,22 @@ public class FavorDAO {
 		OrdersellbuyDTO sellbuy = new OrdersellbuyDTO();
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
-			
+
 			ResultSet rs = stmt.executeQuery(
 					"select T1.* from stock T1,favor T2 where T1.stockcde = T2.stockcde and favorite = '" + favorite + "'");
-		
+
 			rs.next();
 			System.out.print(rs.getString("stockcde"));
-			
+
 			sellbuy.setStockCode(rs.getString("STOCKCDE"));
 			sellbuy.setStockName(rs.getString("MEIGARA_NAME_DBCS"));
 			sellbuy.setOrderType(rs.getString("ORDER_TYPE"));
 			sellbuy.setQuantity(rs.getInt("NUM_ORDER"));
 			sellbuy.setOrderPrice(rs.getInt("ORDERPRICE"));
 			return sellbuy;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

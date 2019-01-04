@@ -13,7 +13,8 @@ public class CustomerDAO {
 
 	static {
 		try {
-			Class.forName("org.postgresql.Driver");
+		//
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -25,21 +26,22 @@ public class CustomerDAO {
 	public static String getAcct(String id, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
-		
+
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			//JDBC
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT ACCTID  FROM CUSTOMER WHERE LOGINID = ? AND PASSWORD = ?");
-			
+
 			stmt.setString(1, id);
 			stmt.setString(2, password);
-		
+
 			ResultSet rs = stmt.executeQuery();
-			
+
 			rs.next();
 			String acctId = rs.getString("acctid");
-			
+
 		return acctId;
-		
+
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
@@ -62,18 +64,18 @@ public class CustomerDAO {
 	// それ以外の場合は、例外発生時も含めすべてfalse
 	return null;
 }
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	public static boolean isRegisteredLog(String id, String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT count(*) as count FROM CUSTOMER WHERE LOGINID = ? AND PASSWORD = ?");
 
 			stmt.setString(1, id);
@@ -86,7 +88,7 @@ public class CustomerDAO {
 
 			if (count.equals("1")) {
 				// 一致するレコードが1件だけ存在する場合のみtrue
-			
+
 				return true;
 			}
 		//eがインスタンスでprintStackTraceで記述している
@@ -112,9 +114,9 @@ public class CustomerDAO {
 		// それ以外の場合は、例外発生時も含めすべてfalse
 		return false;
 	}
-	
 
-	
+
+
 	/**
 	 * 与えられた口座番号とパスワードの組み合わせが存在するか確認
 	 */
@@ -123,7 +125,7 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT count(*) as count FROM CUSTOMER WHERE ACCTID = ? AND PASSWORD = ?");
 
 			stmt.setString(1, id);
@@ -167,7 +169,7 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			if(type.equals("カウントアップ")){
 				stmt = con.prepareStatement("UPDATE CUSTOMER SET PWCOUNT = PWCOUNT+1 WHERE ACCTID = ?");
 			}else if(type.equals("リセット")){
@@ -205,7 +207,7 @@ public class CustomerDAO {
 		int count = 0;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement("SELECT PWCOUNT as count FROM CUSTOMER WHERE ACCTID = ?");
 
 			stmt.setString(1, id);
@@ -237,32 +239,30 @@ public class CustomerDAO {
 		}
 		return count;
 	}
-	
+
 	/**
 	 * ログインIDとパスワードを作成する loginIDとパスワードのみをupdateとする7_18
 	 */
-	
+
 	public static boolean updateAccount(String acctid, String id,String password) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 
 		try {
-				
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
-			
-			
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt=con.prepareStatement("UPDATE CUSTOMER SET "
 					+ "loginid = ? , password = ? "
 					+ "where acctid = ?");
-			
+
 			stmt.setString(1, id);
 			stmt.setString(2, password);
 			stmt.setString(3, acctid);
 			stmt.executeUpdate();
 
 			return true;
-			
-			
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -283,5 +283,5 @@ public class CustomerDAO {
 		}
 		return false;
 	}
-	
+
 }

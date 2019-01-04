@@ -18,37 +18,37 @@ public class OrdersellbuyDAO {
 
 	static {
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	//受付番号増加
-	
+
 	public static String getNumber() {
-		
+
 		Connection con = null;
 		Statement stmt = null;
 		String number = null;
-		
+
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			//注文テーブルの最新の注文numberを取る
 			ResultSet rs = stmt.executeQuery("select orderno from orders order by order_dt desc offset 0 limit 1");
-			
+
 			rs.next();
-			
+
 			number = (String) rs.getString("orderno");
-			
+
 			//連番部分の取り出し
 			number = number.substring(8,14);
-			
+
 			return number;
-			
+
 			}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -58,33 +58,33 @@ public class OrdersellbuyDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			}
-		}	
-	}	
-	
+		}
+	}
+
 	return number;
 }
-			
-			
-	
+
+
+
 //	public static void increaseNumber(String number1) {
-//		
+//
 //		Connection con = null;
 //		PreparedStatement stmt = null;
-//		
+//
 //		try {
-//			
+//
 //			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
 //			stmt = con.prepareStatement(" update stock set number = ? ");
-//			
+//
 //			int num = Integer.parseInt(number1);
 //			num = num + 1;
 //			String number = String.valueOf(num);
-//			
+//
 //			stmt.setString(1,number);
-//			
+//
 //			// クエリの実行
 //			stmt.executeUpdate();
-//			
+//
 //			}catch (SQLException e) {
 //				e.printStackTrace();
 //			} finally {
@@ -97,11 +97,11 @@ public class OrdersellbuyDAO {
 //		}
 //	}
 //}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * 注文一覧
 	 */
@@ -112,7 +112,7 @@ public class OrdersellbuyDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -172,7 +172,7 @@ public class OrdersellbuyDAO {
 		OrdersellbuyDTO sellbuy = new OrdersellbuyDTO();
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -229,31 +229,31 @@ public class OrdersellbuyDAO {
 		String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"INSERT INTO ORDERS (ORDERNO,ACCTID, STOCKCDE, NUM_ORDER, ORDERPRICE, ORDER_TYPE, CONDITIONS, STATUS, SELL_BUY,BUYFEE) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
 
 			orderId =  (String) new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
-			
+
 			int num = Integer.parseInt(number);
-			
+
 			//初期化用
 			//num = 999998;
-			
+
 			num = num + 1;
 
 			if( num==1000000) {
-			
+
 				num =0 ;
 			}
-			
-			
-			
+
+
+
 			String num2 = String.format("%06d", num);
-			
+
 			String neworderId = orderId + num2;
-			
+
 			stmt.setString(1,neworderId);
 			stmt.setString(2, order.getAccountId());
 			stmt.setString(3, order.getStockCode());
@@ -264,16 +264,16 @@ public class OrdersellbuyDAO {
 			stmt.setString(8, "注文中");
 			stmt.setString(9, "買");
 			stmt.setString(10, order.getBuyfee());
-			
+
 			// クエリの実行
 			stmt.executeUpdate();
-			
+
 			return neworderId;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-	
+
+
 		} finally {
 			if (stmt != null) {
 				try {
@@ -289,14 +289,14 @@ public class OrdersellbuyDAO {
 					e.printStackTrace();
 				}
 			}
-			
+
 		}
 
 		// 受付番号を返す
 		return number;
 }
 
-	
+
 
 
 	/**
@@ -308,7 +308,7 @@ public class OrdersellbuyDAO {
 		Statement stmt = null;
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
@@ -355,7 +355,7 @@ public class OrdersellbuyDAO {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 注文内容の取り消し
 	 */
@@ -365,7 +365,7 @@ public class OrdersellbuyDAO {
 	//	String orderId = "";
 
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/icwdb", "postgres", "password");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/mydb?autoReconnect=true&useSSL=false", "root", "root");
 			stmt = con.prepareStatement(
 					"DELETE FROM ORDERS WHERE orderno = ?");
 
@@ -373,7 +373,7 @@ public class OrdersellbuyDAO {
 
 			// クエリの実行
 			stmt.executeUpdate();
-			
+
 			return true;
 
 		} catch (SQLException e) {
