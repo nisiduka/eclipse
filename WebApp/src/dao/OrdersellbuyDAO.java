@@ -38,7 +38,9 @@ public class OrdersellbuyDAO {
 			stmt = con.createStatement();
 
 			//注文テーブルの最新の注文numberを取る
-			ResultSet rs = stmt.executeQuery("select orderno from orders order by order_dt desc offset 0 limit 1");
+			ResultSet rs = stmt.executeQuery("select orderno from orders order by order_dt desc");
+			/*mysqlではoffsetとlimitでは使えない　*/
+			//ResultSet //rs = stmt.executeQuery("select orderno from orders order by order_dt desc offset 0 limit 1");
 
 			rs.next();
 
@@ -248,7 +250,7 @@ public class OrdersellbuyDAO {
 				num =0 ;
 			}
 
-
+			System.out.printf(order.getStockCode());
 
 			String num2 = String.format("%06d", num);
 
