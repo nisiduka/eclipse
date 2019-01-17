@@ -121,16 +121,17 @@ public class FavorDAO {
 //			ResultSet rs = stmt.executeQuery(
 //					"select T1.*,T2.MEIGARA_NAME_DBCS,T3.PRICE,T4.MARKETNAME from ORDERS T1,STOCK T2,STOCK_STATUS T3,MARKET T4 where T1.STOCKCDE = T2.STOCKCDE AND T1.STOCKCDE = T3.STOCKCDE AND T2.MARKETCDE = T4.MARKETCDE AND T1.ACCTID = '"
 //							+ accountId + "' ORDER BY ORDERNO DESC");
+//			ResultSet rs = stmt.executeQuery(
+//					"select T1.favorite T2.* from favor T1,stock T2 where T1.stockcde=T2.stockcde and acctid= '" + accountId + "'");
 			ResultSet rs = stmt.executeQuery(
-					"select T1.favorite T2.* from favor T1,stock T2 where T1.stockcde=T2.stockcde and acctid= '" + accountId + "'");
-
+					"select * from favor where acctid = '" + accountId + "'");
 
 			while (rs.next()) {
 				FavorDTO favor = new FavorDTO();
 				favor.setFavorite(rs.getString("favorite"));
-				favor.setStockCode(rs.getString("stockcde"));
+				favor.setStockCode(rs.getString("STOCKCDE"));
 				favor.setAccountId(rs.getString("acctid"));
-				favor.setStockName(rs.getString("meigara_name_dbcs"));
+	//			favor.setStockName(rs.getString("meigara_name_dbcs"));
 
 				list.add(favor);
 			}

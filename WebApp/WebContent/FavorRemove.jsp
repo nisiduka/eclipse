@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- DTOのjavaファイルを読み込むにはもちろんimportが必要-->
 
-<%@ page import="dto.*" %>    
+<%@ page import="dto.*" %>
 
 <% String stockcode = (String)request.getAttribute("stockcde"); %>
 
@@ -24,7 +24,7 @@
 
 
 	<%@ include file="_Nav.jsp"%>
-	<center>	
+	<center>
 	<div class="container">
 		<h1>お気に入り削除</h1>
 		<p>お気に入り削除が完了しました。</p>

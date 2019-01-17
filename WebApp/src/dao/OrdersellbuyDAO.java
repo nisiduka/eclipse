@@ -43,7 +43,6 @@ public class OrdersellbuyDAO {
 			//ResultSet //rs = stmt.executeQuery("select orderno from orders order by order_dt desc offset 0 limit 1");
 
 			rs.next();
-
 			number = (String) rs.getString("orderno");
 
 			//連番部分の取り出し

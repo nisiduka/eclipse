@@ -38,7 +38,6 @@
 
 		<tr>
 			<td><%=favors.getFavorite()%></td>
-			<td><%=favors.getStockName()%></td>
 			<td><%=favors.getStockCode()%></td>
 			<td><a href="FavorRemove?favorite=<%=favors.getFavorite()%>"><button type="button"
 						class="btn btn-default btn-sm">取消</button>
