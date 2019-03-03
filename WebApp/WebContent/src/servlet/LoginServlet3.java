@@ -14,7 +14,7 @@ import dao.CustomerDAO;
 /**
  * ログイン処理
  */
-@WebServlet("/Login3")
+@WebServlet("/Logi")
 public class LoginServlet3 extends HttpServlet {
 	private static final int TIMEOUT_SEC = 600;
 
