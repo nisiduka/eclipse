@@ -13,7 +13,7 @@ public class CustomerDAO {
 
 	static {
 		try {
-		//
+			//JDBCドライバのロード
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -28,15 +28,18 @@ public class CustomerDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			//JDBC
+			//データベース接続の確立
 			con = DriverManager.getConnection("jdbc:mysql://localhost/icwdb?autoReconnect=true&useSSL=false", "root", "root");
+			//送信すべきSQL文の雛形を準備
 			stmt = con.prepareStatement("SELECT ACCTID  FROM CUSTOMER WHERE LOGINID = ? AND PASSWORD = ?");
-
+			//setStringで雛形へ値を流し込む
 			stmt.setString(1, id);
+			//setStringで雛形へ値を流し込む
 			stmt.setString(2, password);
-
+			//excuteUpdateメソッド
 			ResultSet rs = stmt.executeQuery();
-
+			//nextメソッド()で一行ずつ進める
+			//get〜()メソッドで必要な列を取り出す
 			rs.next();
 			String acctId = rs.getString("acctid");
 

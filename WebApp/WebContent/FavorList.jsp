@@ -24,6 +24,7 @@
 	   <thead>
         <tr>
           <th>お気に入り番号</th>
+          <th>銘柄名</th>
           <th>銘柄コード</th>
           <th>お気に入り取り消し</th>
 
@@ -38,6 +39,7 @@
 
 		<tr>
 			<td><%=favors.getFavorite()%></td>
+			<td><%=favors.getStockName()%></td>
 			<td><%=favors.getStockCode()%></td>
 			<td><a href="FavorRemove?favorite=<%=favors.getFavorite()%>"><button type="button"
 						class="btn btn-default btn-sm">取消</button>

@@ -124,14 +124,14 @@ public class FavorDAO {
 //			ResultSet rs = stmt.executeQuery(
 //					"select T1.favorite T2.* from favor T1,stock T2 where T1.stockcde=T2.stockcde and acctid= '" + accountId + "'");
 			ResultSet rs = stmt.executeQuery(
-					"select * from favor where acctid = '" + accountId + "'");
+					"select * from favor,stock where favor.stockcde = stock.stockcde and acctid = '" + accountId + "'");
 
 			while (rs.next()) {
 				FavorDTO favor = new FavorDTO();
 				favor.setFavorite(rs.getString("favorite"));
 				favor.setStockCode(rs.getString("STOCKCDE"));
 				favor.setAccountId(rs.getString("acctid"));
-	//			favor.setStockName(rs.getString("meigara_name_dbcs"));
+				favor.setStockName(rs.getString("MEIGARA_NAME_DBCS"));
 
 				list.add(favor);
 			}
