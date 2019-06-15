@@ -15,13 +15,19 @@ import dao.CustomerDAO;
  * ログイン処理
  */
 @WebServlet("/Login1")
+//送信元のactionとリクエスト先のサーブレットクラス、JSPで一致させる必要がある
 public class LoginServlet1 extends HttpServlet {
 	private static final int TIMEOUT_SEC = 600;
 
 	@Override
+	//リクエストパラメーターはHttpServletRequestのインスタンスに保存される
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//文字コードの設定
+		request.setCharacterEncoding(UTF-8);
+		
 		// 入力されたログインIDとパスワードを取得
+		//request.getParameter("リクエストパラメーターの名前")
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 
@@ -67,3 +73,7 @@ public class LoginServlet1 extends HttpServlet {
 		}
 	}
 }
+
+
+
+

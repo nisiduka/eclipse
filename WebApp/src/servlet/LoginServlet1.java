@@ -18,6 +18,39 @@ import dao.CustomerDAO;
 public class LoginServlet1 extends HttpServlet {
 	private static final int TIMEOUT_SEC = 600;
 
+	//Getでのリクエスト方法
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+
+		if (CustomerDAO.isRegisteredLog(id, password)) {
+			//間違い回数をリセット
+			CustomerDAO.pwWrongCount(id, "リセット");
+
+
+			// IDとパスワードの組み合わせが存在する場合、セッションを作成してトップ画面に遷移
+			HttpSession session = request.getSession();
+
+			//(accountId)の情報を入手する　DAOの中にacctIdを呼び出すメソッドを追加する
+			String accuntId = CustomerDAO.getAcct(id, password);
+
+			session.setAttribute("accountId", accuntId);
+			session.setMaxInactiveInterval(TIMEOUT_SEC);
+
+			request.getRequestDispatcher("Top").forward(request, response);
+
+		}else {
+			CustomerDAO.pwWrongCount(id, "カウントアップ");
+			request.setAttribute("errorMessage", "IDとパスワードの組み合わせが間違っています!!");
+			request.getRequestDispatcher("Login.jsp").forward(request, response);
+		}
+
+	}
+
+
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,14 +68,20 @@ public class LoginServlet1 extends HttpServlet {
 		if (!password.matches("^\\p{ASCII}{6,16}$")) {
 			request.setAttribute("errorMessage", "パスワードは6文字以上16文字以内の半角英数字または記号で入力してください");
 			request.getRequestDispatcher("Login.jsp").forward(request, response);
-		}
+
+			//forward構文
+			/*
+			RequestDispatcher dispacher =  request.getRequestDispatcher("Login.jsp");
+			dispacher.forward(request, response);
+			*/
+
 
 //		//PW間違い回数チェック、4回以上だったらエラー
 //		if(CustomerDAO.getPwWrongCount(id)>=4){
 //			request.setAttribute("errorMessage", "パスワードの間違い上限が超えています。長谷川証券にお問合せください「0120-123-4567」");
 //			request.getRequestDispatcher("Login.jsp").forward(request, response);
 // }
-		else if (CustomerDAO.isRegisteredLog(id, password)) {
+		}else if (CustomerDAO.isRegisteredLog(id, password)) {
 			//間違い回数をリセット
 			CustomerDAO.pwWrongCount(id, "リセット");
 

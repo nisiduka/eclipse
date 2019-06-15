@@ -287,4 +287,7 @@ public class CustomerDAO {
 		return false;
 	}
 
+	//メソッドの追加
+
+
 }
