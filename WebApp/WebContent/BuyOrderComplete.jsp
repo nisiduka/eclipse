@@ -23,7 +23,7 @@
 			受付番号: <a href="OrderDetail?id=<%=orderId%>"><%=orderId%></a>
 		</p>
 		<p id="buttons">
-			<a href="Top" class="btn btn-default">トップページに戻る</a>
+			<a href="Top" class="btn btn-default">トップページへ戻る</a>
 		</p>
 	</div>
 </body>
